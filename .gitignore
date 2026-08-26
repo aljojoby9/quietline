@@ -30,3 +30,14 @@ go.work.sum
 # Editor/IDE
 # .idea/
 # .vscode/
+
+# Local relay state and client homes
+*.db
+*.db-wal
+*.db-shm
+quietline.db
+.env
+/ql
+/server
+/quietline-server
+bin/
