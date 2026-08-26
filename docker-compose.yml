@@ -1,0 +1,30 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: quietline
+      POSTGRES_PASSWORD: quietline
+      POSTGRES_DB: quietline
+    volumes:
+      - quietline-pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U quietline -d quietline"]
+      interval: 2s
+      timeout: 5s
+      retries: 20
+    ports:
+      - "5432:5432"
+
+  server:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      QUIETLINE_DSN: postgres://quietline:quietline@db:5432/quietline?sslmode=disable
+      QUIETLINE_LISTEN: :8080
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  quietline-pg:

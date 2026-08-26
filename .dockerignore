@@ -1,0 +1,8 @@
+.git
+*.db
+*.db-wal
+*.db-shm
+.env
+/ql
+/server
+account.json
